@@ -5,6 +5,9 @@
 
 **True hands-free automation for your Antigravity Agent (Quack Edition).**
 
+> [!NOTE]  
+> **This project is archived.** The auto-accept feature has been fixed in the main application and now works reliably, making this plugin redundant.
+
 This extension uses a DOM text-matching workaround designed for newer versions (like 1.18.4) where standard VS Code commands (`antigravity.agent.acceptAgentStep`) might not work or where Google changed the DOM classes.
 
 It searches for buttons with text content matching `Accept`, `Run`, `Always Allow`, or `Allow` and automatically clicks them. It also clicks "Expand all" spans to reveal hidden agent steps.
