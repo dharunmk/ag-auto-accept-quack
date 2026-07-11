@@ -153,7 +153,9 @@ function injectViaCDP() {
         res.on('end', () => {
             try {
                 const targets = JSON.parse(data);
-                const webviewTargets = targets.filter(t => t.url && t.url.includes('vscode-webview://'));
+                const webviewTargets = targets.filter(t =>
+                    t.type === 'page' || (t.url && t.url.includes('vscode-webview://'))
+                );
 
                 webviewTargets.forEach(target => {
                     executeScriptInTarget(target.webSocketDebuggerUrl);
@@ -202,7 +204,8 @@ function executeScriptInTarget(wsUrl) {
                 const buttonCandidates = deepQueryAll('button, vscode-button');
                 buttonCandidates.forEach(btn => {
                     const text = (btn.textContent || '').trim();
-                    const triggers = ['Accept', 'Run', 'Always Allow', 'Allow'];
+                    // Antigravity now renders some permission flows with a "Submit" confirmation button.
+                    const triggers = ['Accept', 'Run', 'Always Allow', 'Allow', 'Submit'];
                     if (triggers.some(t => text.includes(t))) {
                         btn.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
                     }
